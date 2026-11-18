@@ -1,41 +1,63 @@
 # VCSE — Verified Capability and Skill Execution
 
-Private repository-ready snapshot of VCSE **v0.5.1** with a separate **official Qwen-Agent comparison harness**. Existing VCSE execution code is retained; the compact-planner patch is applied to `vcse/discovery.py`. This does **not** mean VCSE's runtime is implemented using Qwen-Agent. Qwen-Agent is an independent benchmark arm.
+**Experimental Python browser-agent research and independently verified skill replay.** This repository contains the VCSE v0.5.1 research snapshot and a separate comparison harness using the official Qwen-Agent framework.
 
-## APIs and models
+> **Research status:** prototype and benchmark code, not a production autonomous agent. No demonstrated superiority to established agents on independently verified real-world tasks.
 
-VCSE's `OpenAICompatiblePlanner` in `vcse/discovery.py` accepts any valid HTTPS OpenAI-compatible chat-completions endpoint, including Google Gemini, OpenAI, Groq and OpenRouter. `OllamaNativePlanner` supports local Ollama. Configure keys only through environment variables. **Qwen-Agent** supports model backend configuration separately in `comparisons/tools/compare_agents.py`. The comparison harness supports `--provider gemini|openai|groq|openrouter` and one common model across both arms.
+## What is implemented
 
-See [comparisons/README.md](comparisons/README.md) to run a bounded benchmark. Both arms use the same model, browser and tools; estimated API spend is calculated from reported usage and user-supplied model rates. Qwen-Agent must support the chosen model's tool-calling compatibility. This code has not been verified with live API credentials.
+- Playwright-based constrained browser workflow execution, observation and verification.
+- Planner interfaces for local Ollama and HTTPS OpenAI-compatible chat-completions APIs.
+- Compact-action planner experiments and verified action-replay research.
+- A standalone benchmark comparing official Qwen-Agent with **VCSE-style planner/replay arms** using matched API model, restricted public-web navigation and measured token usage.
 
-## Usage
+**Important distinction:** the VCSE-style benchmark arms are not the complete VCSE engine, and Qwen-Agent is an independent baseline, not a VCSE dependency at runtime.
+
+## Architecture at a glance
+
+```text
+Goal -> bounded observation -> planner -> permitted action -> verifier -> outcome
+                                      ^
+                            optional verified replay
+
+Benchmark: same hosted model -> [Qwen-Agent | VCSE-style planner] -> same browser -> independent verifier
+```
+
+## Quick start
+
+Requires a supported Python version and a Playwright Chromium installation.
 
 ```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
+python -m playwright install chromium
 python -m unittest discover -s tests -v
-python -m unittest discover -s comparisons/tests -v
 ```
 
-## Publishing
-
-Create a **new empty PRIVATE repo** at https://github.com/new (`vcse-agent-research` suggested), with no README or license initialized. Then from the extracted folder:
+For API benchmarking, see [comparisons/README.md](comparisons/README.md):
 
 ```powershell
-git init -b main
-git add .
-git diff --cached --check
-git diff --cached --name-only
-git commit -m 'Import VCSE v0.5.1 with provider-neutral API and official Qwen-Agent benchmark'
-git remote add origin https://github.com/premantchaudhari/vcse-agent-research.git
-git push -u origin main
+python -m pip install -r requirements-benchmark.txt
+python -m unittest discover -s comparisons/tests -v
+$env:GEMINI_API_KEY = Read-Host 'Gemini API key'
+python comparisons/tools/compare_agents.py --provider gemini --model gemini-2.5-flash --ids python-docs --arms qwen-agent vcse-no-memory vcse-memory --repeat 1 --call-timeout 25 --trial-timeout 90
 ```
 
-**Do not push until checking `git diff --cached --name-only` for secrets, local logs, private data or credentials.** License is intentionally not added; absent a license, permission to reuse is not granted.
+These commands are documented configuration examples, not claims that the hosted benchmark has succeeded.
 
-## Scientific status
+## Evaluation standards
 
-This repository contains experimental research code. Synthetic benchmark success, fixture results and tests do not establish real-world agent superiority. The API comparison is independent and is not a full engine-to-engine comparison.
+Compare **verified task success first**, then cost per successful task, latency, token usage, model calls and safety. Separate cold planning, warm planning and replay cases. A fast failed task is still a failure. Keep prompts, model configuration, browser capabilities and execution limits matched. External website changes and model-provider behavior can affect reproducibility.
 
-### Validation status of this snapshot
+Snapshot validation reported 12/12 comparison offline tests. The full browser suite and hosted-API path were not validated in the snapshot build environment; current CI and live outcomes must be tested separately.
 
-On the package builder, `python -m unittest discover -s comparisons/tests -v` passed 12/12 offline tests. The full VCSE browser-based suite could not pass here because Playwright's Chromium executable was absent; install `python -m playwright install chromium` before rerunning. No hosted API or browser live task was executed on the builder. Local Windows and hosted-provider behavior remain unverified.
+## Security and responsible use
+
+Use only public read-only evaluation pages or sites you are authorized to automate. Do not provide cookies, authenticated page content, client data or credentials to untrusted model endpoints. Keys belong in environment variables; see [`.env.example`](.env.example). Do not commit runs, session stores or browser artifacts. A public repository is **not** itself approval to execute on third-party services.
+
+## Publication and licensing
+
+The initial import was prepared as a private research snapshot. Before making it public, audit current files **and Git history** for secrets, non-redistributable dependencies and third-party code. No license is present; until one is deliberately selected, publication does not grant reuse rights.
+
+This research is a portfolio demonstration, not evidence that VCSE outperforms Qwen-Agent or any other agent.
