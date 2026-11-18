@@ -1,0 +1,25 @@
+# Credentials, sessions, and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.sqlite
+*.db
+# Local benchmark data and skill stores
+artifacts/
+comparisons/artifacts/
+*.jsonl
+# Python, test and IDE files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.idea/
+.vscode/
+# Windows/OS
+Thumbs.db
+.DS_Store

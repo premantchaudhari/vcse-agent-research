@@ -1,0 +1,10 @@
+# Benchmark dependencies. Qwen-Agent 0.0.34 has undeclared eager imports on some installs.
+playwright>=1.50,<2
+qwen-agent==0.0.34
+numpy>=1.24
+soundfile>=0.12
+tqdm>=4.0
+python-dateutil>=2.8
+jieba>=0.42
+rank-bm25>=0.2
+snowballstemmer>=2.2

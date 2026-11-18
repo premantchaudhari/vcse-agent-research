@@ -1,0 +1,25 @@
+{
+  "tasks": [
+    {
+      "id": "python-docs",
+      "start": "https://www.python.org/",
+      "goal": "Find the Python official documentation landing page",
+      "allowed_origins": ["https://www.python.org", "https://docs.python.org"],
+      "url_contains": ["docs.python.org"]
+    },
+    {
+      "id": "python-downloads",
+      "start": "https://www.python.org/",
+      "goal": "Navigate to the official Python downloads page (do not download any file)",
+      "allowed_origins": ["https://www.python.org"],
+      "url_contains": ["/downloads"]
+    },
+    {
+      "id": "mdn-javascript",
+      "start": "https://developer.mozilla.org/en-US/",
+      "goal": "Find MDN's JavaScript documentation",
+      "allowed_origins": ["https://developer.mozilla.org"],
+      "url_contains": ["/docs/Web/JavaScript"]
+    }
+  ]
+}
