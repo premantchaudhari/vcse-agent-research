@@ -56,10 +56,10 @@ Snapshot validation reported 12/12 comparison offline tests. The full browser su
 
 Use only public read-only evaluation pages or sites you are authorized to automate. Do not provide cookies, authenticated page content, client data or credentials to untrusted model endpoints. Keys belong in environment variables; see [`.env.example`](.env.example). Do not commit runs, session stores or browser artifacts. A public repository is **not** itself approval to execute on third-party services.
 
-## License and publication readiness
+## License and public release
 
 Original VCSE research code in this repository is offered under the [MIT License](LICENSE). Third-party frameworks, packages and documentation retain their own licenses; consult their upstream projects. Do not treat the presence of an MIT license as clearance for separately sourced material.
 
-**Pre-publication gate:** audit current files and the entire reachable Git history for credentials, private data and redistributability before changing the repository visibility to public. Publication is not itself a security review.
+**Publication status:** this repository is public and its maintainer-owned code is provided under the MIT License. Public availability does not certify the code as secure, establish third-party redistribution rights or validate hosted benchmark results. See [SECURITY.md](SECURITY.md) for ongoing security responsibilities.
 
 This research is a portfolio demonstration, not evidence that VCSE outperforms Qwen-Agent or any other agent.
