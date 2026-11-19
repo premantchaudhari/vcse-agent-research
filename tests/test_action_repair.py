@@ -48,12 +48,14 @@ class RepairTests(unittest.TestCase):
         requests=[]
         def fake_urlopen(req,timeout):
             payload=json.loads(req.data);requests.append(payload)
-            return Reply({'action':'stop','selector':'','reason':'not found'})
+            return Reply({'action':'stop','selector':''})
         with patch('vcse.discovery.urlopen',side_effect=fake_urlopen):
             proposal=planner.repair('goal',{'links':[]},[],'https://vcse.fixture.test',{'reason':'bad'})
         self.assertEqual(proposal['action'],'stop')
         self.assertEqual(requests[0]['think'],False)
-        self.assertEqual(requests[0]['format']['required'],['action','selector','reason'])
+        self.assertEqual(requests[0]['format']['required'],['action','selector'])
+        self.assertEqual(set(requests[0]['format']['properties']),{'action','selector'})
+        self.assertFalse(requests[0]['format']['additionalProperties'])
         self.assertIsNotNone(requests[0]['messages'][1]['content'].find('correction'))
 
 if __name__=='__main__':unittest.main()
