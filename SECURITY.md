@@ -16,12 +16,14 @@ Please use GitHub's private vulnerability reporting feature if enabled. Otherwis
 ## Disclosure
 This project has no production security certification, external audit or guarantee of agent safety. Tests and simulated fixtures do not establish safety on unrestricted live websites.
 
-## Publishing checklist for the maintainer
-Before changing this repository from private to public:
-1. Scan every tracked file and all reachable commits, tags and branches with a secret scanner such as Gitleaks.
-2. Confirm the repository contains no real keys, tokens, cookies, session stores, client information or confidential logs.
-3. Check the provenance and redistribution rights of every included code file and test fixture.
-4. Install dependencies and rerun both test suites in a clean environment with Playwright Chromium available.
-5. Confirm the README describes actual behavior and marks all hosted benchmark results unverified until reproduced.
+## Public repository security checklist
+
+This repository is public under the MIT License. The following are ongoing security and research validation tasks; they are **not all confirmed complete**:
+
+1. Run a dedicated secret scan over every tracked file and all reachable commits, tags and branches, such as Gitleaks.
+2. Verify no keys, tokens, cookies, session stores, client data or confidential logs are present, including in Git history.
+3. Check provenance and redistribution rights of every included code file and test fixture; third-party licenses remain applicable.
+4. Re-run both test suites in a clean environment with Playwright Chromium installed.
+5. Verify hosted benchmark outcomes before making performance claims and keep the README's research limitations accurate.
 
 If a secret was ever committed, revoke or rotate it first. Deleting a line from the latest commit does not remove it from Git history.
