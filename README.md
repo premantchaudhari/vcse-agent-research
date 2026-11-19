@@ -1,8 +1,16 @@
 # VCSE — Verified Capability and Skill Execution
 
-**Experimental Python browser-agent research and independently verified skill replay.** This repository contains the VCSE v0.5.1 research snapshot and a separate comparison harness using the official Qwen-Agent framework.
+**Experimental Python browser-agent research focused on action verification and reusable capability replay.** This repository contains the VCSE v0.5.1 research snapshot and a separate comparison harness using the official Qwen-Agent framework.
 
 > **Research status:** prototype and benchmark code, not a production autonomous agent. No demonstrated superiority to established agents on independently verified real-world tasks.
+
+## Repository overview
+
+**Suggested GitHub About description:** Experimental Python AI agent framework for verified browser automation, skill replay, and benchmarking against Qwen-Agent.
+
+**Suggested topics:** `python` · `ai-agents` · `browser-automation` · `playwright` · `llm` · `agentic-ai` · `benchmarking` · `ollama` · `qwen-agent` · `skill-replay` · `artificial-intelligence`.
+
+The GitHub About description and topics are repository settings and are not automatically populated by this README. The full repository is [public](https://github.com/premantchaudhari/vcse-agent-research), and the original maintainer-owned source is MIT-licensed.
 
 ## What is implemented
 
@@ -51,6 +59,12 @@ These commands are documented configuration examples, not claims that the hosted
 Compare **verified task success first**, then cost per successful task, latency, token usage, model calls and safety. Separate cold planning, warm planning and replay cases. A fast failed task is still a failure. Keep prompts, model configuration, browser capabilities and execution limits matched. External website changes and model-provider behavior can affect reproducibility.
 
 Snapshot validation reported 12/12 comparison offline tests. The full browser suite and hosted-API path were not validated in the snapshot build environment; current CI and live outcomes must be tested separately.
+
+## Continuous validation and release notes
+
+The [research validation workflow](.github/workflows/research-validation.yml) runs synthetic browser tests, comparison harness offline tests, Python compilation, and a history-level Gitleaks check on GitHub Actions. **Live model-provider benchmark experiments are not included in CI** and must be reproduced separately.
+
+The [v0.5.1 research snapshot notes](docs/release-v0.5.1.md) describe release scope and limitations. A GitHub release/tag only exists once separately published; the presence of release notes does not imply an official release.
 
 ## Security and responsible use
 
