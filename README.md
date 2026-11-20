@@ -54,6 +54,12 @@ python comparisons/tools/compare_agents.py --provider gemini --model gemini-2.5-
 
 These commands are documented configuration examples, not claims that the hosted benchmark has succeeded.
 
+## Unseen-layout transfer experiment (under evaluation)
+
+The [transfer ablation protocol](docs/transfer-ablation.md) compares a local Qwen planner across no-memory, naive-selector-memory, and verified-label-memory arms on seeded **synthetic layouts that differ from the training source**. It includes changed element IDs, renamed links, ambiguous decoy links, and corrupted invoice totals. Results must be independently verified before any public performance claims. **No real local-Qwen transfer measurements are available yet.**
+
+Run the deterministic protocol smoke test with `python -m unittest discover -s tests -p test_transfer_benchmark.py -v`; refer to the linked instructions for a local Ollama pilot and an optional 48-layout evaluation.
+
 ## Evaluation standards
 
 Compare **verified task success first**, then cost per successful task, latency, token usage, model calls and safety. Separate cold planning, warm planning and replay cases. A fast failed task is still a failure. Keep prompts, model configuration, browser capabilities and execution limits matched. External website changes and model-provider behavior can affect reproducibility.
