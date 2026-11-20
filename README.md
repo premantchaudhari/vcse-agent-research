@@ -83,3 +83,7 @@ Original VCSE research code in this repository is offered under the [MIT License
 **Publication status:** this repository is public and its maintainer-owned code is provided under the MIT License. Public availability does not certify the code as secure, establish third-party redistribution rights or validate hosted benchmark results. See [SECURITY.md](SECURITY.md) for ongoing security responsibilities.
 
 This research is a portfolio demonstration, not evidence that VCSE outperforms Qwen-Agent or any other agent.
+
+### Four-arm memory isolation (v0.2)
+
+The [controlled memory-isolation protocol](docs/memory-isolation.md) compares no memory, exact-selector replay, simple label-heuristic replay and conservative verified-memory replay with the **same independently validated source skill**. This explicitly isolates applicability from unreliable skill training. It uses synthetic browser fixtures; **no v0.2 local-model results have been established yet**.
