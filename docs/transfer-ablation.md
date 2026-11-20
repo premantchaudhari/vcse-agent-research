@@ -87,3 +87,32 @@ Along with the sanitized JSON report, publish:
 ## Scope safety
 
 All browser fixtures are in-memory HTML, allowlisted to `https://vcse.fixture.test`. No real invoice accounts, external website access, cookies, browser profiles or API keys are required.
+
+## Analyze repeated runs before changing the algorithm
+
+After a set of local-model runs, aggregate all original reports with the new
+**audit command**. This is a descriptive post-processing step; it does not
+rerun Ollama or the browser:
+
+```powershell
+python -m vcse.transfer_audit `
+  artifacts/transfer-qwen-pilot.json `
+  artifacts/transfer-qwen-seed-2027.json `
+  artifacts/transfer-qwen-seed-3049.json `
+  artifacts/transfer-qwen-seed-4093.json `
+  --output artifacts/transfer-audit.json
+```
+
+The audit reports *solvable positive cases* separately from the deliberately
+corrupted invoice **negative safety controls**. It flags any unsafe false
+positive where a corrupted invoice was marked verified. It also distinguishes
+runs where training failed, counts actual memory reuse, and displays
+paired outcomes against no-memory on the same case. Failure messages are
+bucketed into planner errors, browser/timeout errors, missing selectors,
+missing tables and exhausted budgets. These are **failure-message categories,
+not verified root-cause diagnoses**.
+
+Do **not** interpret the four corrupted cases as solved tasks or omit the
+seed where skill training failed. Likewise, a fixture with a changed ID but
+the same visible label is not evidence of semantic generalization across
+renamed links. Predeclare rules before a larger experiment.
