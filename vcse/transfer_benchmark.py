@@ -189,7 +189,9 @@ def summarize(rows: list[dict], arm: str) -> dict:
 def run(planner_factory, variants=("ids", "renamed", "decoy", "corrupt"),
         families=(0, 1, 2), seed=1307, arms=ARMS, output=None, replicates=1) -> dict:
     """One pre-trained skill per family; all arms share that skill and test layouts."""
-    if not 1 <= replicates <= 10:\n        raise ValueError("replicates must be 1..10")\n    if any(a not in ARMS for a in arms):
+    if not 1 <= replicates <= 10:
+        raise ValueError("replicates must be 1..10")
+    if any(a not in ARMS for a in arms):
         raise ValueError("invalid arm")
     if len(set(arms)) != len(arms):
         raise ValueError("duplicate arms")
@@ -199,7 +201,9 @@ def run(planner_factory, variants=("ids", "renamed", "decoy", "corrupt"),
         skill, calls = learned_skill(training_case(family), planner_factory())
         skills[family] = skill
         training_calls += calls
-    cases = [make_layout(family, variant, seed + copy * 1009)\n             for copy in range(replicates)\n             for family in families for variant in variants]
+    cases = [make_layout(family, variant, seed + copy * 1009)
+             for copy in range(replicates)
+             for family in families for variant in variants]
     # Pair all arms on the same case in a deterministic randomized order.
     rng = random.Random(seed)
     rng.shuffle(cases)
@@ -248,7 +252,9 @@ class FixturePlanner:
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--planner", choices=("ollama", "fixture"), default="ollama")
-    parser.add_argument("--seed", type=int, default=1307)\n    parser.add_argument("--replicates", type=int, default=1,\n                        help="4 gives 48 test layouts (3 families x 4 variants x 4)")
+    parser.add_argument("--seed", type=int, default=1307)
+    parser.add_argument("--replicates", type=int, default=1,
+                        help="4 gives 48 test layouts (3 families x 4 variants x 4)")
     parser.add_argument("--variants", nargs="+", choices=("ids", "renamed", "decoy", "corrupt"),
                         default=["ids", "renamed", "decoy", "corrupt"])
     parser.add_argument("--families", nargs="+", type=int, choices=(0, 1, 2), default=[0, 1, 2])
